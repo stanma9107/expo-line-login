@@ -9,7 +9,7 @@
     "clean": "expo-module clean",
     "lint": "expo-module lint",
     "test": "expo-module test",
-    "prepare": "expo-module prepare",
+    "prepare": "husky install",
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
     "open:ios": "open -a \"Xcode\" example/ios",
@@ -28,11 +28,11 @@
   "author": "Stan <stan@syntax.email> (https://github.com/stanma9107)",
   "license": "MIT",
   "homepage": "https://github.com/stanma9107/expo-line-login#readme",
-  "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.0.25",
     "expo-module-scripts": "^3.0.11",
-    "expo-modules-core": "^1.5.11"
+    "expo-modules-core": "^1.5.11",
+    "husky": "^8.0.3"
   },
   "peerDependencies": {
     "expo": "*",
