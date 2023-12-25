@@ -1,4 +1,10 @@
-import { login, logout, LoginPermission, BotPrompt } from "expo-line-login";
+import {
+  login,
+  logout,
+  LoginPermission,
+  BotPrompt,
+  getProfile,
+} from "expo-line-login";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const lineLogin = async () => {
@@ -21,11 +27,23 @@ const lineLogout = async () => {
   }
 };
 
+const lineGetProfile = async () => {
+  try {
+    const res = await getProfile();
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function App() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={lineLogin}>
         <Text>Login with Line</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={lineGetProfile}>
+        <Text>Get Profile</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={lineLogout}>
         <Text>Logout</Text>
@@ -41,5 +59,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    rowGap: 6,
   },
 });
