@@ -1,7 +1,8 @@
 {
   "platforms": ["ios", "android"],
   "ios": {
-    "modules": ["ExpoLineLoginModule"]
+    "modules": ["ExpoLineLoginModule"],
+    "appDelegateSubscribers": ["AppLifecycleDelegate"]
   },
   "android": {
     "modules": ["dev.stanma.line.ExpoLineLoginModule"]
