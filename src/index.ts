@@ -1,26 +1,41 @@
-import { NativeModulesProxy, EventEmitter, Subscription } from 'expo-modules-core';
-
 // Import the native module. On web, it will be resolved to ExpoLineLogin.web.ts
 // and on native platforms to ExpoLineLogin.ts
-import ExpoLineLoginModule from './ExpoLineLoginModule';
-import ExpoLineLoginView from './ExpoLineLoginView';
-import { ChangeEventPayload, ExpoLineLoginViewProps } from './ExpoLineLogin.types';
+import ExpoLineLoginModule from "./ExpoLineLoginModule";
+import { LoginResult, ProfileResult, AccessToken } from "./types";
 
-// Get the native constant value.
-export const PI = ExpoLineLoginModule.PI;
-
-export function hello(): string {
-  return ExpoLineLoginModule.hello();
+export enum LoginPermission {
+  EMAIL = "email",
+  PROFILE = "profile",
+  OPEN_ID = "openid",
 }
 
-export async function setValueAsync(value: string) {
-  return await ExpoLineLoginModule.setValueAsync(value);
+export enum BotPrompt {
+  NORMAL = "normal",
+  AGGRESSIVE = "aggressive",
 }
 
-const emitter = new EventEmitter(ExpoLineLoginModule ?? NativeModulesProxy.ExpoLineLogin);
+export const login = async (
+  scopes: LoginPermission[],
+  botPrompt: BotPrompt,
+): Promise<LoginResult> => {
+  return await ExpoLineLoginModule.login(
+    scopes.map((scope) => scope.toString()),
+    botPrompt.toString(),
+  );
+};
 
-export function addChangeListener(listener: (event: ChangeEventPayload) => void): Subscription {
-  return emitter.addListener<ChangeEventPayload>('onChange', listener);
-}
+export const logout = async () => {
+  return await ExpoLineLoginModule.logout();
+};
 
-export { ExpoLineLoginView, ExpoLineLoginViewProps, ChangeEventPayload };
+export const getProfile = async (): Promise<ProfileResult> => {
+  return await ExpoLineLoginModule.getProfile();
+};
+
+export const getAccessToken = async (): Promise<AccessToken> => {
+  return await ExpoLineLoginModule.getAccessToken();
+};
+
+export const getBotFriendshipStatus = async (): Promise<boolean> => {
+  return await ExpoLineLoginModule.getBotFriendshipStatus();
+};

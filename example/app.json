@@ -27,6 +27,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "../app.plugin.js",
+        {
+          "channelId": "YOUR_CHANNEL_ID"
+        }
+      ]
+    ]
   }
 }

@@ -28,11 +28,18 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>dev.stanma.line.example</string>
+          <string>line3rdp.dev.stanma.line.example</string>
         </array>
       </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
+    <key>LINE_CHANNEL_ID</key>
+    <string>YOUR_CHANNEL_ID</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>lineauth2</string>
+    </array>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
