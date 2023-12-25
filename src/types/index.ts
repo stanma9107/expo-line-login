@@ -4,7 +4,7 @@ interface AccessToken {
   refresh_token: string;
   createdAt: number;
   access_token: string;
-  id_token: string;
+  id_token?: string;
   expires_in: number;
 }
 
@@ -15,9 +15,9 @@ interface UserProfile {
 }
 
 export interface LoginResult {
-  friendshipStatusChanged: boolean;
+  friendshipStatusChanged?: boolean;
   scope: string;
-  IDTokenNonce: string;
+  IDTokenNonce?: string;
   accessToken: AccessToken;
-  userProfile: UserProfile;
+  userProfile?: UserProfile;
 }
