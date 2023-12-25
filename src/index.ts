@@ -1,7 +1,7 @@
 // Import the native module. On web, it will be resolved to ExpoLineLogin.web.ts
 // and on native platforms to ExpoLineLogin.ts
 import ExpoLineLoginModule from "./ExpoLineLoginModule";
-import { LoginResult, ProfileResult } from "./types";
+import { LoginResult, ProfileResult, AccessToken } from "./types";
 
 export enum LoginPermission {
   EMAIL = "email",
@@ -30,4 +30,8 @@ export const logout = async () => {
 
 export const getProfile = async (): Promise<ProfileResult> => {
   return await ExpoLineLoginModule.getProfile();
+};
+
+export const getAccessToken = async (): Promise<AccessToken> => {
+  return await ExpoLineLoginModule.getAccessToken();
 };

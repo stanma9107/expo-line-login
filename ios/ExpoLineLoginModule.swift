@@ -73,6 +73,18 @@ public class ExpoLineLoginModule: Module {
                 }
             }
         }
+        
+        AsyncFunction("getAccessToken") { (promise: Promise) in
+            if let token = AccessTokenStore.shared.current {
+                do {
+                    promise.resolve(try token.toJSON())
+                } catch {
+                    promise.reject(Exception(name: "JSON Parse Error", description: "Error in Parse to JSON"))
+                }
+            } else {
+                promise.reject(Exception(name: "Error", description: "Get AccessToken Error"))
+            }
+        }
     }
 }
 

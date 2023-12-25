@@ -1,4 +1,4 @@
-interface AccessToken {
+export interface AccessToken {
   token_type: string;
   scope: string;
   refresh_token: string;
