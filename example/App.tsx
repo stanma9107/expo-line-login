@@ -13,11 +13,22 @@ const lineLogin = async () => {
   }
 };
 
+const lineLogout = async () => {
+  try {
+    await logout();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function App() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={lineLogin}>
         <Text>Login with Line</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={lineLogout}>
+        <Text>Logout</Text>
       </TouchableOpacity>
     </View>
   );
