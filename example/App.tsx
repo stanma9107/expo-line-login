@@ -1,11 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { login, logout, LoginPermission, BotPrompt } from "expo-line-login";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import * as ExpoLineLogin from 'expo-line-login';
+const lineLogin = async () => {
+  try {
+    const res = await login(
+      [LoginPermission.PROFILE, LoginPermission.OPEN_ID, LoginPermission.EMAIL],
+      BotPrompt.NORMAL,
+    );
+    console.log(res.userProfile.displayName);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>{ExpoLineLogin.hello()}</Text>
+      <TouchableOpacity onPress={lineLogin}>
+        <Text>Login with Line</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -13,8 +26,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
 });
