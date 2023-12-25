@@ -4,6 +4,7 @@ import {
   LoginPermission,
   BotPrompt,
   getProfile,
+  getAccessToken,
 } from "expo-line-login";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -36,6 +37,15 @@ const lineGetProfile = async () => {
   }
 };
 
+const lineGetAccessToken = async () => {
+  try {
+    const res = await getAccessToken();
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function App() {
   return (
     <View style={styles.container}>
@@ -44,6 +54,9 @@ export default function App() {
       </TouchableOpacity>
       <TouchableOpacity onPress={lineGetProfile}>
         <Text>Get Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={lineGetAccessToken}>
+        <Text>Get AccessToken</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={lineLogout}>
         <Text>Logout</Text>
