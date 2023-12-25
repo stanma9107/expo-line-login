@@ -47,6 +47,15 @@ public class ExpoLineLoginModule: Module {
                 }
             }
         }
+        
+        AsyncFunction("logout") { (promise: Promise) in
+            LoginManager.shared.logout{ result in
+                switch(result) {
+                case .success: promise.resolve(nil)
+                case .failure(let error): promise.reject(error)
+                }
+            }
+        }
     }
 }
 

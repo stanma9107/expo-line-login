@@ -23,3 +23,7 @@ export const login = async (
     botPrompt.toString(),
   );
 };
+
+export const logout = async () => {
+  return await ExpoLineLoginModule.logout();
+};
