@@ -13,7 +13,7 @@ const lineLogin = async () => {
       [LoginPermission.PROFILE, LoginPermission.OPEN_ID, LoginPermission.EMAIL],
       BotPrompt.NORMAL,
     );
-    console.log(res.userProfile.displayName);
+    console.log(res.userProfile?.displayName);
   } catch (error) {
     console.log(error);
   }
