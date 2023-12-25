@@ -14,15 +14,9 @@ public class ExpoLineLoginModule: Module {
         Name("ExpoLineLogin")
         
         AsyncFunction("login") { (scope: [String], botPrompt: BotPromptType?, promise: Promise) in
-            
-            debugPrint("login")
-            debugPrint(scope)
-            debugPrint(botPrompt ?? "No BotPrompt")
-            
             let scopes = scope.map{ LoginPermission(rawValue: $0) }
             var parameters: LoginManager.Parameters = LoginManager.Parameters.init()
             if (botPrompt != nil) {
-                debugPrint(botPrompt!.rawValue)
                 parameters.botPromptStyle = LoginManager.BotPrompt(rawValue: botPrompt!.rawValue)
             }
             
@@ -36,7 +30,6 @@ public class ExpoLineLoginModule: Module {
                     case .success(let value):
                         do {
                             let valueJson = try value.toJSON()
-                            debugPrint(valueJson)
                             promise.resolve(valueJson)
                         } catch {
                             promise.reject(Exception(name: "JSON Parse Error", description: "Error in Parse to JSON"))
@@ -63,7 +56,6 @@ public class ExpoLineLoginModule: Module {
                 case .success(let profile):
                     do {
                         let profileJson = try profile.toJSON()
-                        debugPrint(profileJson)
                         promise.resolve(profileJson)
                     } catch {
                         promise.reject(Exception(name: "JSON Parse Error", description: "Error in Parse to JSON"))
