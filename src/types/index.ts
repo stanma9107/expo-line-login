@@ -21,3 +21,9 @@ export interface LoginResult {
   accessToken: AccessToken;
   userProfile?: UserProfile;
 }
+
+export interface ProfileResult {
+  displayName: string;
+  pictureUrl: string;
+  userId: string;
+}

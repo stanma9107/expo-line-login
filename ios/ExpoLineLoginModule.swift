@@ -56,6 +56,23 @@ public class ExpoLineLoginModule: Module {
                 }
             }
         }
+        
+        AsyncFunction("getProfile") { (promise: Promise) in
+            API.getProfile{ result in
+                switch result {
+                case .success(let profile):
+                    do {
+                        let profileJson = try profile.toJSON()
+                        debugPrint(profileJson)
+                        promise.resolve(profileJson)
+                    } catch {
+                        promise.reject(Exception(name: "JSON Parse Error", description: "Error in Parse to JSON"))
+                    }
+                case .failure(let error):
+                    promise.reject(error)
+                }
+            }
+        }
     }
 }
 
