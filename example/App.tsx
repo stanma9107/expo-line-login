@@ -5,6 +5,7 @@ import {
   BotPrompt,
   getProfile,
   getAccessToken,
+  getBotFriendshipStatus,
 } from "expo-line-login";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -46,6 +47,15 @@ const lineGetAccessToken = async () => {
   }
 };
 
+const lineGetBotFriendshipStatus = async () => {
+  try {
+    const res = await getBotFriendshipStatus();
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default function App() {
   return (
     <View style={styles.container}>
@@ -57,6 +67,9 @@ export default function App() {
       </TouchableOpacity>
       <TouchableOpacity onPress={lineGetAccessToken}>
         <Text>Get AccessToken</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={lineGetBotFriendshipStatus}>
+        <Text>Check Friendship Status</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={lineLogout}>
         <Text>Logout</Text>
