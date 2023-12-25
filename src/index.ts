@@ -35,3 +35,7 @@ export const getProfile = async (): Promise<ProfileResult> => {
 export const getAccessToken = async (): Promise<AccessToken> => {
   return await ExpoLineLoginModule.getAccessToken();
 };
+
+export const getBotFriendshipStatus = async (): Promise<boolean> => {
+  return await ExpoLineLoginModule.getBotFriendshipStatus();
+};

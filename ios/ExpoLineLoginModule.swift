@@ -85,6 +85,17 @@ public class ExpoLineLoginModule: Module {
                 promise.reject(Exception(name: "Error", description: "Get AccessToken Error"))
             }
         }
+        
+        AsyncFunction("getBotFriendshipStatus") { (promise: Promise) in
+            API.getBotFriendshipStatus{ result in
+                switch result {
+                case .success(let value):
+                    promise.resolve(value.friendFlag)
+                case .failure(let error):
+                    promise.reject(error)
+                }
+            }
+        }
     }
 }
 
