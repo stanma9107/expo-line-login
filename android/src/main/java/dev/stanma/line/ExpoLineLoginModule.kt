@@ -24,7 +24,7 @@ class ExpoLineLoginModule : Module() {
     Name("ExpoLineLogin")
 
     AsyncFunction("login") { scopes: List<String>, botPrompt: String, promise: Promise ->
-      val applicationInfo = appContext?.reactContext?.packageManager?.getApplicationInfo(appContext?.reactContext?.packageName.toString(), PackageManager.GET_META_DATA)
+      val applicationInfo = appContext.reactContext?.packageManager?.getApplicationInfo(appContext.reactContext?.packageName.toString(), PackageManager.GET_META_DATA)
       val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
 
       val loginConfig = LineAuthenticationConfig.Builder(channelId).build()
@@ -36,7 +36,7 @@ class ExpoLineLoginModule : Module() {
         }
         .build()
 
-      val currentActivity = appContext?.currentActivity
+      val currentActivity = appContext.currentActivity
       val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
 
       val loginIntent = when {
