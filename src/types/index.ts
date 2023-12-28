@@ -1,7 +1,7 @@
 export interface AccessToken {
-  token_type: string;
-  scope: string;
-  refresh_token: string;
+  token_type?: string;
+  scope?: string;
+  refresh_token?: string;
   createdAt: number;
   access_token: string;
   id_token?: string;
