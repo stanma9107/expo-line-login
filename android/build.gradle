@@ -64,7 +64,7 @@ android {
 
   namespace "dev.stanma.line"
   defaultConfig {
-    minSdkVersion safeExtGet("minSdkVersion", 21)
+    minSdkVersion safeExtGet("minSdkVersion", 24)
     targetSdkVersion safeExtGet("targetSdkVersion", 33)
     versionCode 1
     versionName "0.1.0"
@@ -86,4 +86,5 @@ repositories {
 dependencies {
   implementation project(':expo-modules-core')
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${getKotlinVersion()}"
+  implementation "com.linecorp.linesdk:linesdk:latest.release"
 }
