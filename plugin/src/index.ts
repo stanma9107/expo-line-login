@@ -37,17 +37,9 @@ const withMyApiKey: ConfigPlugin<{
 
     AndroidConfig.Manifest.addMetaDataItemToMainApplication(
       mainApplication,
-      "LINE_CHANNEL_ID",
+      "line.sdk.channelId",
       channelId,
     );
-
-    if (universalLink) {
-      AndroidConfig.Manifest.addMetaDataItemToMainApplication(
-        mainApplication,
-        "LINE_UNIVERSAL_LINK_URL",
-        universalLink,
-      );
-    }
 
     return config;
   });
