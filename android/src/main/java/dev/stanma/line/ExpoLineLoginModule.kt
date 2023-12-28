@@ -141,5 +141,19 @@ class ExpoLineLoginModule : Module() {
         promise.reject(accessTokenRes.responseCode.name, accessTokenRes.errorData.message, Exception(accessTokenRes.errorData.message))
       }
     }
+
+    AsyncFunction("getBotFriendshipStatus") {promise: Promise ->
+      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
+      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
+      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
+      val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
+      val botFriendshipStatusRes = client.friendshipStatus
+      if (botFriendshipStatusRes.isSuccess) {
+        val botFriendshipStatus = botFriendshipStatusRes.responseData
+        promise.resolve(botFriendshipStatus.isFriend)
+      } else {
+        promise.reject(botFriendshipStatusRes.responseCode.name, botFriendshipStatusRes.errorData.message, Exception(botFriendshipStatusRes.errorData.message))
+      }
+    }
   }
 }
