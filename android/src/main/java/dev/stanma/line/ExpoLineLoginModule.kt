@@ -6,6 +6,8 @@ import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import com.linecorp.linesdk.*
+import com.linecorp.linesdk.api.LineApiClient
+import com.linecorp.linesdk.api.LineApiClientBuilder
 import com.linecorp.linesdk.auth.LineAuthenticationConfig
 import com.linecorp.linesdk.auth.LineAuthenticationParams
 import com.linecorp.linesdk.auth.LineLoginApi
@@ -88,6 +90,24 @@ class ExpoLineLoginModule : Module() {
         }
 
         loginPromise = null
+      }
+    }
+    AsyncFunction("getProfile") { promise: Promise ->
+      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
+      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
+      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
+      val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
+      val profileRes = client.profile
+      if (profileRes.isSuccess) {
+        val profile = profileRes.responseData
+        val resultDict = mapOf(
+          "displayName" to profile.displayName,
+          "userId" to profile.userId,
+          "pictureUrl" to profile.pictureUrl,
+        )
+        promise.resolve(resultDict)
+      } else {
+        promise.reject(profileRes.responseCode.name, profileRes.errorData.message, Exception(profileRes.errorData.message))
       }
     }
   }
