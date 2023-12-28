@@ -39,14 +39,11 @@ class ExpoLineLoginModule : Module() {
       val currentActivity = appContext.currentActivity
       val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
 
-      val loginIntent = when {
-        loginConfig != null -> LineLoginApi.getLoginIntent(
-          context,
-          loginConfig,
-          authenticationParams
-        )
-        else -> LineLoginApi.getLoginIntent(context, channelId, authenticationParams)
-      }
+      val loginIntent = LineLoginApi.getLoginIntent(
+        context,
+        loginConfig,
+        authenticationParams
+      )
 
       currentActivity?.startActivityForResult(loginIntent, LOGIN_REQUEST_CODE)
       loginPromise = promise
