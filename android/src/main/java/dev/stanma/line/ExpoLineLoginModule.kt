@@ -89,6 +89,20 @@ class ExpoLineLoginModule : Module() {
         loginPromise = null
       }
     }
+
+    AsyncFunction("logout") { promise: Promise ->
+      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
+      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
+      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
+      val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
+      val logoutRes = client.logout()
+      if (logoutRes.isSuccess) {
+        promise.resolve(null)
+      } else {
+        promise.reject(logoutRes.responseCode.name, logoutRes.errorData.message, Exception(logoutRes.errorData.message))
+      }
+    }
+
     AsyncFunction("getProfile") { promise: Promise ->
       val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
       val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
