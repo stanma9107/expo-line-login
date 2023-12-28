@@ -64,7 +64,8 @@ class ExpoLineLoginModule : Module() {
               "accessToken" to mapOf(
                 "access_token" to result.lineCredential?.accessToken?.tokenString,
                 "expires_in" to result.lineCredential?.accessToken?.expiresInMillis,
-                "id_token" to result.lineIdToken?.rawString
+                "id_token" to result.lineIdToken?.rawString,
+                "createdAt" to result.lineCredential?.accessToken?.issuedClientTimeMillis,
               ),
               "userProfile" to mapOf(
                 "displayName" to result.lineProfile?.displayName,
@@ -119,6 +120,25 @@ class ExpoLineLoginModule : Module() {
         promise.resolve(resultDict)
       } else {
         promise.reject(profileRes.responseCode.name, profileRes.errorData.message, Exception(profileRes.errorData.message))
+      }
+    }
+
+    AsyncFunction("getAccessToken") { promise: Promise ->
+      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
+      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
+      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
+      val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
+      val accessTokenRes = client.currentAccessToken
+      if (accessTokenRes.isSuccess) {
+        val accessToken = accessTokenRes.responseData
+        val resultDict = mapOf(
+          "access_token" to accessToken.tokenString,
+          "expires_in" to accessToken.expiresInMillis,
+          "createdAt" to accessToken.issuedClientTimeMillis,
+        )
+        promise.resolve(resultDict)
+      } else {
+        promise.reject(accessTokenRes.responseCode.name, accessTokenRes.errorData.message, Exception(accessTokenRes.errorData.message))
       }
     }
   }
