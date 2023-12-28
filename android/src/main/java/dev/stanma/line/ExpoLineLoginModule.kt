@@ -1,6 +1,7 @@
 package dev.stanma.line
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.modules.Module
@@ -17,16 +18,30 @@ import expo.modules.kotlin.exception.Exceptions
 class ExpoLineLoginModule : Module() {
   private val LOGIN_REQUEST_CODE = 1;
   private var loginPromise: Promise? = null;
+
+  private lateinit var context: Context;
+  private var applicationInfo: ApplicationInfo? = null;
+  private var channelId: String = "";
   override fun definition() = ModuleDefinition {
     // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
     // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
     // The module will be accessible from `requireNativeModule('ExpoLineLogin')` in JavaScript.
     Name("ExpoLineLogin")
 
-    AsyncFunction("login") { scopes: List<String>, botPrompt: String, promise: Promise ->
-      val applicationInfo = appContext.reactContext?.packageManager?.getApplicationInfo(appContext.reactContext?.packageName.toString(), PackageManager.GET_META_DATA)
-      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
+    OnCreate {
+      context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
+      applicationInfo = when {
+        android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU -> {
+          context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.ApplicationInfoFlags.of(0))
+        }
+        else -> {
+          context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
+        }
+      }
+      channelId = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
+    }
 
+    AsyncFunction("login") { scopes: List<String>, botPrompt: String, promise: Promise ->
       val loginConfig = LineAuthenticationConfig.Builder(channelId).build()
 
       val authenticationParams = LineAuthenticationParams.Builder()
@@ -92,9 +107,6 @@ class ExpoLineLoginModule : Module() {
     }
 
     AsyncFunction("logout") { promise: Promise ->
-      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
-      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
-      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
       val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
       val logoutRes = client.logout()
       if (logoutRes.isSuccess) {
@@ -105,9 +117,6 @@ class ExpoLineLoginModule : Module() {
     }
 
     AsyncFunction("getProfile") { promise: Promise ->
-      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
-      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
-      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
       val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
       val profileRes = client.profile
       if (profileRes.isSuccess) {
@@ -124,9 +133,6 @@ class ExpoLineLoginModule : Module() {
     }
 
     AsyncFunction("getAccessToken") { promise: Promise ->
-      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
-      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
-      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
       val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
       val accessTokenRes = client.currentAccessToken
       if (accessTokenRes.isSuccess) {
@@ -143,9 +149,6 @@ class ExpoLineLoginModule : Module() {
     }
 
     AsyncFunction("getBotFriendshipStatus") {promise: Promise ->
-      val context: Context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
-      val applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
-      val channelId: String = applicationInfo?.metaData?.getInt("line.sdk.channelId").toString()
       val client: LineApiClient = LineApiClientBuilder(context, channelId).build()
       val botFriendshipStatusRes = client.friendshipStatus
       if (botFriendshipStatusRes.isSuccess) {
