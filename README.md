@@ -31,12 +31,12 @@ import {
 } from 'expo-line-login';
 
 const result = await login({
-  permissions: [
+  [
     LoginPermission.PROFILE,
     LoginPermission.OPEN_ID,
     LoginPermission.EMAIL,
   ],
-  botPrompt: BotPrompt.NORMAL,
+  BotPrompt.NORMAL,
 });
 console.log(result);
 ```
