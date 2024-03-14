@@ -13,14 +13,11 @@ const withMyApiKey: ConfigPlugin<{
   config = withInfoPlist(config, (config) => {
     config.modResults["LINE_CHANNEL_ID"] = channelId;
     // push scheme to CFBundleURLSchemes
-    config.modResults["CFBundleURLTypes"] = [
-      {
-        CFBundleURLSchemes: [
-          ...config.ios?.infoPlist?.CFBundleURLTypes?.[0]?.CFBundleURLSchemes,
-          `line3rdp.${BundleIdentifier.getBundleIdentifier(config)}`,
-        ],
-      },
-    ];
+    config.modResults["CFBundleURLTypes"]?.push({
+      CFBundleURLSchemes: [
+        `line3rdp.${BundleIdentifier.getBundleIdentifier(config)}`,
+      ],
+    });
     config.modResults["LSApplicationQueriesSchemes"] = ["lineauth2"];
 
     if (universalLink) {

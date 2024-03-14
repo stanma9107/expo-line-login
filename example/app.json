@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "expo-line-login-example",
+    "scheme": "expo-line-login",
     "slug": "expo-line-login-example",
     "version": "1.0.0",
     "orientation": "portrait",
