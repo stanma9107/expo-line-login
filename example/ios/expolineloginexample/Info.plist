@@ -27,7 +27,13 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>expo-line-login</string>
           <string>dev.stanma.line.example</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
           <string>line3rdp.dev.stanma.line.example</string>
         </array>
       </dict>
