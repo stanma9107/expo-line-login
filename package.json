@@ -1,6 +1,6 @@
 {
   "name": "expo-line-login",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Integrate LINE login to Expo App",
   "main": "build/index.js",
   "types": "build/index.d.ts",
