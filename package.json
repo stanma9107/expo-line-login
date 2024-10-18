@@ -1,6 +1,6 @@
 {
   "name": "expo-line-login",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Integrate LINE login to Expo App",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/stanma9107/expo-line-login#readme",
   "devDependencies": {
     "@types/react": "^18.0.25",
-    "expo-module-scripts": "^3.0.11",
+    "expo-module-scripts": "^3.5.2",
     "expo-modules-core": "^1.12.26",
     "husky": "^8.0.3"
   },
