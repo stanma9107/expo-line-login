@@ -35,7 +35,8 @@
         {
           "channelId": "YOUR_CHANNEL_ID"
         }
-      ]
+      ],
+      "expo-build-properties"
     ]
   }
 }
