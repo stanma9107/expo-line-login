@@ -9,16 +9,16 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~49.0.15",
-    "react": "18.2.0",
-    "react-native": "0.72.6",
-    "expo-splash-screen": "~0.20.5",
-    "expo-status-bar": "~1.6.0"
+    "expo": "^54.0.31",
+    "expo-splash-screen": "~31.0.13",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/react": "~18.2.14",
-    "typescript": "^5.1.3"
+    "@types/react": "~19.1.10",
+    "typescript": "~5.9.2"
   },
   "private": true,
   "expo": {
