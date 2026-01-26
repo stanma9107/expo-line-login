@@ -10,12 +10,20 @@ const config = getDefaultConfig(__dirname);
 config.resolver.blockList = [
   ...Array.from(config.resolver.blockList ?? []),
   new RegExp(path.resolve('..', 'node_modules', 'react-native')),
+  new RegExp(path.resolve('..', 'node_modules', 'expo-modules-core')),
 ];
 
 config.resolver.nodeModulesPaths = [
   path.resolve(__dirname, './node_modules'),
   path.resolve(__dirname, '../node_modules'),
+
 ];
+
+// Force these modules to always resolve from example's node_modules
+// to avoid duplicate class instances breaking instanceof checks
+config.resolver.extraNodeModules = {
+  'expo-modules-core': path.resolve(__dirname, './node_modules/expo-modules-core'),
+};
 
 config.watchFolders = [path.resolve(__dirname, '..')];
 
