@@ -7,6 +7,7 @@ import {
   getAccessToken,
   getBotFriendshipStatus,
 } from "expo-line-login";
+import { CodedError } from "expo-modules-core";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const lineLogin = async () => {
@@ -17,7 +18,9 @@ const lineLogin = async () => {
     );
     console.log(res.userProfile?.displayName);
   } catch (error) {
-    console.log(error);
+    if (error instanceof CodedError) {
+      console.log(`[${error.code}] ${error.message}`);
+    }
   }
 };
 
