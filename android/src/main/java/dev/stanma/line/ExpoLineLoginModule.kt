@@ -16,11 +16,11 @@ import com.linecorp.linesdk.auth.LineLoginResult
 import expo.modules.kotlin.exception.Exceptions
 
 class ExpoLineLoginModule : Module() {
-  private val LOGIN_REQUEST_CODE = 1;
-  private var loginPromise: Promise? = null;
+  private val LOGIN_REQUEST_CODE = 1
+  private var loginPromise: Promise? = null
 
-  private lateinit var context: Context;
-  private var applicationInfo: ApplicationInfo? = null;
+  private lateinit var context: Context
+  private var applicationInfo: ApplicationInfo? = null
   override fun definition() = ModuleDefinition {
     // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
     // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
@@ -28,8 +28,8 @@ class ExpoLineLoginModule : Module() {
     Name("ExpoLineLogin")
 
     OnCreate {
-      context = appContext.reactContext ?: throw Exceptions.ReactContextLost();
-      applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA);
+      context = appContext.reactContext ?: throw Exceptions.ReactContextLost()
+      applicationInfo = context.packageManager?.getApplicationInfo(context.packageName.toString(), PackageManager.GET_META_DATA)
     }
 
 
@@ -58,7 +58,7 @@ class ExpoLineLoginModule : Module() {
       loginPromise = promise
     }
 
-    OnActivityResult {_, (requestCode, resultCode, data) ->
+    OnActivityResult {_, (requestCode, _, data) ->
       if (requestCode == LOGIN_REQUEST_CODE) {
         val result: LineLoginResult = LineLoginApi.getLoginResultFromIntent(data)
 
@@ -87,7 +87,7 @@ class ExpoLineLoginModule : Module() {
             loginPromise = null
           }
           LineApiResponseCode.CANCEL -> {
-            loginPromise?.reject(result.responseCode.name, result.errorData.message, Exception(result.errorData.message))
+            loginPromise?.reject("ERR_USER_CANCELLED", "User cancel the login process", Exception(result.errorData.message))
             loginPromise = null
           }
           else -> {
